@@ -47,9 +47,9 @@ def test_mask_redactor_keep_last():
 
 def test_resolve_overlaps_prefers_earliest_then_longest():
     matches = [
-        Match(0, 5, "aaaaa", "A"),
-        Match(2, 9, "longerB", "B"),  # overlaps with first
-        Match(10, 12, "cc", "C"),
+        Match(0, 5, "aaaaa", "A", 0.9, "[A_REDACTED]"),
+        Match(2, 9, "longerB", "B", 0.9, "[B_REDACTED]"),  # overlaps with first
+        Match(10, 12, "cc", "C", 0.9, "[C_REDACTED]"),
     ]
     resolved = resolve_overlaps(matches)
     assert [m.label for m in resolved] == ["A", "C"]
@@ -110,3 +110,21 @@ def test_scrub_file_missing_input_reports_error(tmp_path):
     result = engine.scrub_file(tmp_path / "nope.log", tmp_path / "out.log")
     assert not result.ok
     assert result.error
+
+
+def test_find_matches_returns_confidence():
+    """Verify that matches from the engine carry confidence scores."""
+    engine = make_engine()
+    matches = engine.find_matches("a@b.com from 10.0.0.1")
+    assert len(matches) == 2
+    for m in matches:
+        assert 0.0 <= m.confidence <= 1.0
+        assert m.replacement != ""
+
+
+def test_find_matches_returns_replacement_tags():
+    """Verify that each match has a typed replacement tag."""
+    engine = make_engine()
+    matches = engine.find_matches("a@b.com")
+    assert len(matches) == 1
+    assert matches[0].replacement == "[EMAIL_REDACTED]"
