@@ -14,3 +14,11 @@ class SSNDetector(RegexDetector):
 
     label = "SSN"
     pattern = _SSN_RE
+    default_confidence = 0.90
+
+    def get_confidence(self, value: str) -> float:
+        """SSNs with dashes are higher confidence since the format is
+        more specific (plain 9-digit numbers could be other identifiers)."""
+        if "-" in value:
+            return 0.95
+        return 0.85

@@ -13,7 +13,7 @@ _IPV4_RE = re.compile(rf"\b(?:{_OCTET}\.){{3}}{_OCTET}\b")
 _IPV6_RE = re.compile(
     r"\b(?:[A-Fa-f0-9]{1,4}:){2,7}[A-Fa-f0-9]{1,4}\b"
     r"|\b(?:[A-Fa-f0-9]{1,4}:){1,7}:\b"
-    r"|\b::(?:[A-Fa-f0-9]{1,4}:){0,6}[A-Fa-f0-9]{1,4}\b",
+    r"|\\b::(?:[A-Fa-f0-9]{1,4}:){0,6}[A-Fa-f0-9]{1,4}\b",
 )
 
 
@@ -22,6 +22,7 @@ class IPv4Detector(RegexDetector):
 
     label = "IPV4"
     pattern = _IPV4_RE
+    default_confidence = 0.95
 
 
 class IPv6Detector(RegexDetector):
@@ -29,3 +30,4 @@ class IPv6Detector(RegexDetector):
 
     label = "IPV6"
     pattern = _IPV6_RE
+    default_confidence = 0.90

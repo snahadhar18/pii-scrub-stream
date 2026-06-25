@@ -32,9 +32,28 @@ class CreditCardDetector(RegexDetector):
 
     label = "CREDIT_CARD"
     pattern = _CC_RE
+    default_confidence = 0.95
 
     def validate(self, value: str) -> bool:
         digits = [ch for ch in value if ch.isdigit()]
         if not 13 <= len(digits) <= 19:
             return False
         return luhn_checksum_valid(value)
+
+    def get_confidence(self, value: str) -> float:
+        """Cards with standard prefixes (Visa, MC, Amex, Discover) get higher
+        confidence. Luhn-valid but non-standard-prefix cards are slightly lower."""
+        digits = "".join(ch for ch in value if ch.isdigit())
+        # Visa: starts with 4
+        if digits.startswith("4") and len(digits) in (13, 16, 19):
+            return 0.99
+        # Mastercard: starts with 51-55 or 2221-2720
+        if digits[:2] in ("51", "52", "53", "54", "55"):
+            return 0.99
+        # Amex: starts with 34 or 37
+        if digits[:2] in ("34", "37") and len(digits) == 15:
+            return 0.99
+        # Discover: starts with 6011 or 65
+        if digits.startswith("6011") or digits.startswith("65"):
+            return 0.98
+        return self.default_confidence

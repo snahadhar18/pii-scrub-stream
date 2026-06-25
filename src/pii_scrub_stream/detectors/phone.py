@@ -25,8 +25,18 @@ class PhoneDetector(RegexDetector):
 
     label = "PHONE"
     pattern = _PHONE_RE
+    default_confidence = 0.85
 
     def validate(self, value: str) -> bool:
         # Require at least 7 digits to avoid matching short numeric tokens.
         digits = sum(ch.isdigit() for ch in value)
         return 7 <= digits <= 15
+
+    def get_confidence(self, value: str) -> float:
+        """Phone numbers with country codes or parenthesised area codes are
+        higher confidence since they follow a more specific format."""
+        if value.strip().startswith("+"):
+            return 0.95
+        if "(" in value and ")" in value:
+            return 0.92
+        return self.default_confidence
