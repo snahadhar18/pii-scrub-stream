@@ -81,6 +81,7 @@ class GenericAPIKeyDetector(Detector):
 
     label = "API_KEY"
     default_confidence = 0.80
+    default_severity = "HIGH"
 
     #: Minimum Shannon entropy to consider a string a potential secret.
     min_entropy: float = 3.5

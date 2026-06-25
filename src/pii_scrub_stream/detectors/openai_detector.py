@@ -42,6 +42,7 @@ class OpenAIKeyDetector(Detector):
 
     label = "OPENAI_KEY"
     default_confidence = 0.97
+    default_severity = "CRITICAL"
 
     def detect(self, text: str) -> List[Match]:
         matches: List[Match] = []

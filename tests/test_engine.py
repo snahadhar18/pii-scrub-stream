@@ -7,8 +7,8 @@ import io
 import pytest
 
 from pii_scrub_stream.detectors.base import Match
-from pii_scrub_stream.detectors.email import EmailDetector
-from pii_scrub_stream.detectors.ip import IPv4Detector
+from pii_scrub_stream.detectors.email_detector import EmailDetector
+from pii_scrub_stream.detectors.ip_detector import IPv4Detector
 from pii_scrub_stream.scrubber.engine import RedactionEngine, resolve_overlaps
 from pii_scrub_stream.scrubber.redaction import label_redactor, make_mask_redactor
 

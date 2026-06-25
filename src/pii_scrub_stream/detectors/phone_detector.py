@@ -26,6 +26,7 @@ class PhoneDetector(RegexDetector):
     label = "PHONE"
     pattern = _PHONE_RE
     default_confidence = 0.85
+    default_severity = "MEDIUM"
 
     def validate(self, value: str) -> bool:
         # Require at least 7 digits to avoid matching short numeric tokens.

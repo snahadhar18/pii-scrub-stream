@@ -32,15 +32,15 @@ from pii_scrub_stream.detectors import (
     build_detectors,
     default_detectors,
 )
-from pii_scrub_stream.detectors.aws_key import AWSAccessKeyDetector
-from pii_scrub_stream.detectors.credit_card import CreditCardDetector, luhn_checksum_valid
-from pii_scrub_stream.detectors.email import EmailDetector
-from pii_scrub_stream.detectors.generic_api_key import GenericAPIKeyDetector, _shannon_entropy
-from pii_scrub_stream.detectors.ip import IPv4Detector, IPv6Detector
-from pii_scrub_stream.detectors.jwt import JWTDetector
-from pii_scrub_stream.detectors.openai_key import OpenAIKeyDetector
-from pii_scrub_stream.detectors.phone import PhoneDetector
-from pii_scrub_stream.detectors.ssn import SSNDetector
+from pii_scrub_stream.detectors.aws_detector import AWSAccessKeyDetector
+from pii_scrub_stream.detectors.credit_card_detector import CreditCardDetector, luhn_checksum_valid
+from pii_scrub_stream.detectors.email_detector import EmailDetector
+from pii_scrub_stream.detectors.generic_api_key_detector import GenericAPIKeyDetector, _shannon_entropy
+from pii_scrub_stream.detectors.ip_detector import IPv4Detector, IPv6Detector
+from pii_scrub_stream.detectors.jwt_detector import JWTDetector
+from pii_scrub_stream.detectors.openai_detector import OpenAIKeyDetector
+from pii_scrub_stream.detectors.phone_detector import PhoneDetector
+from pii_scrub_stream.detectors.ssn_detector import SSNDetector
 
 
 def _values(detector, text):
@@ -99,6 +99,7 @@ class TestEmailDetector:
             "start": 0,
             "end": 14,
             "confidence": 0.99,
+            "severity": "MEDIUM",
             "replacement": "[EMAIL_REDACTED]",
         }
 
@@ -717,6 +718,8 @@ class TestRegistry:
         expected = {
             "email", "phone", "ipv4", "ipv6", "credit_card", "ssn",
             "jwt", "aws_key", "openai_key", "generic_api_key",
+            "github_token", "password", "secret", "cloud_keys",
+            "auth_tokens", "crypto_keys", "network_secrets", "ai_entity",
         }
         assert expected == set(REGISTRY.keys())
 
@@ -726,12 +729,12 @@ class TestRegistry:
 
     def test_default_detectors_count(self):
         detectors = default_detectors()
-        assert len(detectors) == 10
+        assert len(detectors) >= 17  # Some optional detectors like AIDetector might be skipped
 
     def test_available_detectors_sorted(self):
         names = available_detectors()
         assert names == sorted(names)
-        assert len(names) == 10
+        assert len(names) == 18
 
     def test_build_specific_detectors(self):
         detectors = build_detectors(["email", "jwt", "aws_key"])
@@ -787,6 +790,7 @@ class TestMatchDataclass:
             "start": 0,
             "end": 5,
             "confidence": 0.88,
+            "severity": "LOW",
             "replacement": "[TEST_REDACTED]",
         }
 

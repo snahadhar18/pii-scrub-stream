@@ -32,6 +32,7 @@ class Match:
     value: str
     label: str
     confidence: float = 1.0
+    severity: str = "LOW"
     replacement: str = "[REDACTED]"
 
     def __post_init__(self) -> None:
@@ -52,6 +53,7 @@ class Match:
             "start": self.start,
             "end": self.end,
             "confidence": self.confidence,
+            "severity": self.severity,
             "replacement": self.replacement,
         }
 
@@ -67,6 +69,9 @@ class Detector(ABC):
 
     #: Default confidence score for detections.
     default_confidence: float = 0.95
+
+    #: Default severity level for detections.
+    default_severity: str = "LOW"
 
     @abstractmethod
     def detect(self, text: str) -> List[Match]:
@@ -117,12 +122,21 @@ class RegexDetector(Detector):
         """
         return self.default_confidence
 
+    def get_severity(self, value: str) -> str:
+        """Return a severity level for the given matched value.
+
+        Override in subclasses for context-dependent severity scoring.
+        The default returns :attr:`default_severity`.
+        """
+        return self.default_severity
+
     def detect(self, text: str) -> List[Match]:
         matches: List[Match] = []
         for m in self.pattern.finditer(text):
             value = m.group()
             if self.validate(value):
                 confidence = self.get_confidence(value)
+                severity = self.get_severity(value)
                 matches.append(
                     Match(
                         start=m.start(),
@@ -130,6 +144,7 @@ class RegexDetector(Detector):
                         value=value,
                         label=self.label,
                         confidence=confidence,
+                        severity=severity,
                         replacement=self.replacement_tag,
                     )
                 )

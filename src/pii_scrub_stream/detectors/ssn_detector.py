@@ -15,6 +15,7 @@ class SSNDetector(RegexDetector):
     label = "SSN"
     pattern = _SSN_RE
     default_confidence = 0.90
+    default_severity = "HIGH"
 
     def get_confidence(self, value: str) -> float:
         """SSNs with dashes are higher confidence since the format is

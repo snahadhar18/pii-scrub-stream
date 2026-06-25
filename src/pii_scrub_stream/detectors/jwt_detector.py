@@ -51,8 +51,10 @@ class JWTDetector(Detector):
     to JSON containing the ``alg`` field.
     """
 
+    pattern = _JWT_RE
     label = "JWT"
     default_confidence = 0.90
+    default_severity = "HIGH"
 
     def detect(self, text: str) -> List[Match]:
         matches: List[Match] = []

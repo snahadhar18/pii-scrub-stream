@@ -17,3 +17,4 @@ class EmailDetector(RegexDetector):
     label = "EMAIL"
     pattern = _EMAIL_RE
     default_confidence = 0.99
+    default_severity = "MEDIUM"

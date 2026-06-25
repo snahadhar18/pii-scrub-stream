@@ -23,6 +23,7 @@ class IPv4Detector(RegexDetector):
     label = "IPV4"
     pattern = _IPV4_RE
     default_confidence = 0.95
+    default_severity = "LOW"
 
 
 class IPv6Detector(RegexDetector):
@@ -31,3 +32,4 @@ class IPv6Detector(RegexDetector):
     label = "IPV6"
     pattern = _IPV6_RE
     default_confidence = 0.90
+    default_severity = "LOW"

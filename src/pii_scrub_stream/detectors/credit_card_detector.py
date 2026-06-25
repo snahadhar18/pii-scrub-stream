@@ -33,6 +33,7 @@ class CreditCardDetector(RegexDetector):
     label = "CREDIT_CARD"
     pattern = _CC_RE
     default_confidence = 0.95
+    default_severity = "HIGH"
 
     def validate(self, value: str) -> bool:
         digits = [ch for ch in value if ch.isdigit()]
