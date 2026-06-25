@@ -1,4 +1,4 @@
-# Agent Guidelines for pii-scrub-stream
+# Agent Guidelines for redactai
 
 ## Author & contributor attribution (MANDATORY)
 

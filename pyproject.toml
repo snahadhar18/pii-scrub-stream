@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pii-scrub-stream"
+name = "redactai"
 version = "0.2.0"
-description = "PII scrubbing CLI plus RAG Guardian -- pluggable AI security gateway infrastructure."
+description = "RedactAI -- pluggable AI security gateway infrastructure and detection engine."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
@@ -63,24 +63,23 @@ ai = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/snahadhar18/pii-scrub-stream"
-Repository = "https://github.com/snahadhar18/pii-scrub-stream"
-Issues = "https://github.com/snahadhar18/pii-scrub-stream/issues"
+Homepage = "https://github.com/snahadhar18/redactai"
+Repository = "https://github.com/snahadhar18/redactai"
+Issues = "https://github.com/snahadhar18/redactai/issues"
 
 [project.scripts]
-pii-scrub = "pii_scrub_stream.cli.main:cli"
-rag-guardian = "rag_guardian.cli.main:cli"
+redactai-engine = "redactai.engine.cli.main:cli"
+redactai-gateway = "redactai.gateway.cli.main:cli"
 
 [tool.setuptools.packages.find]
-where = ["src", "."]
-include = ["pii_scrub_stream*", "rag_guardian*"]
+where = ["src"]
+include = ["redactai*"]
 
 [tool.setuptools.package-data]
-pii_scrub_stream = ["py.typed"]
-rag_guardian = ["py.typed"]
+redactai = ["py.typed"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "rag_guardian/tests"]
+testpaths = ["tests"]
 addopts = "-ra"
 asyncio_mode = "auto"
 
@@ -93,9 +92,9 @@ select = ["E", "F", "I", "B", "UP", "SIM"]
 
 [tool.ruff.lint.per-file-ignores]
 # FastAPI's dependency-injection idiom relies on calls in argument defaults.
-"rag_guardian/api/app.py" = ["B008"]
+"src/redactai/gateway/api/app.py" = ["B008"]
 # Intentional no-op lifecycle hooks subclasses may override.
-"rag_guardian/ingestion/base.py" = ["B027"]
+"src/redactai/gateway/ingestion/base.py" = ["B027"]
 
 [tool.mypy]
 python_version = "3.10"

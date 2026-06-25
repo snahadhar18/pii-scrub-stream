@@ -17,10 +17,10 @@ import argparse
 import time
 from collections.abc import Sequence
 
-from rag_guardian.core.detector import DetectionSpan, Detector
-from rag_guardian.core.models import Record
-from rag_guardian.core.service import ScanService
-from rag_guardian.streaming.processor import ProcessingEngine
+from redactai.gateway.core.detector import DetectionSpan, Detector
+from redactai.gateway.core.models import Record
+from redactai.gateway.core.service import ScanService
+from redactai.gateway.streaming.processor import ProcessingEngine
 
 
 class SyntheticDetector(Detector):
@@ -69,7 +69,7 @@ def run(records: int, workers: int, batch_size: int, work_us: float) -> dict[str
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="RAG Guardian engine benchmark")
+    parser = argparse.ArgumentParser(description="RedactAI engine benchmark")
     parser.add_argument("--records", type=int, default=50_000)
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--batch-size", type=int, default=256)

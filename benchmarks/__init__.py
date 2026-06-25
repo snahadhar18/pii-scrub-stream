@@ -1,1 +1,1 @@
-"""Benchmark suite for the RAG Guardian processing engine."""
+"""Benchmark suite for the RedactAI processing engine."""

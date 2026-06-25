@@ -1,11 +1,11 @@
-# pii-scrub-stream
+# redactai
 
 A production-ready CLI tool that **streams** text and log files and **redacts
 sensitive information** (PII) — emails, phone numbers, IP addresses, credit
 cards, US SSNs, JWT tokens, AWS keys, OpenAI API keys, and generic API
 secrets — using a modular, extensible detector architecture.
 
-Because files are processed line-by-line, `pii-scrub-stream` handles
+Because files are processed line-by-line, `redactai` handles
 arbitrarily large logs in constant memory, and it can scrub many files in
 parallel with a thread pool.
 
@@ -23,9 +23,9 @@ parallel with a thread pool.
   masking (`****`, optionally keeping the last N characters).
 - **Clean Click CLI** with `scrub`, `batch`, and `detectors` commands.
 
-## RAG Guardian — infrastructure gateway
+## RedactAI — infrastructure gateway
 
-This repository also includes **RAG Guardian** (`rag_guardian/`), an
+This repository also includes **RedactAI** (`redactai.gateway/`), an
 enterprise-grade AI security gateway that provides the *infrastructure* around
 detection — file/CSV/JSON ingestion, a concurrent processing engine, real-time
 streaming, a FastAPI service, observability, Docker, CI/CD and a horizontal
@@ -34,14 +34,14 @@ scaling layer — all built around a single pluggable detector contract. It ship
 
 ```bash
 pip install -e ".[api,json]"
-rag-guardian detectors                       # list registered plugins
-tail -f app.log | rag-guardian stream        # real-time redacting filter
-rag-guardian serve --port 8000               # POST /scan /stream /ingest, GET /health /metrics
+redactai detectors                       # list registered plugins
+tail -f app.log | redactai stream        # real-time redacting filter
+redactai serve --port 8000               # POST /scan /stream /ingest, GET /health /metrics
 ```
 
-See [`rag_guardian/docs/README.md`](rag_guardian/docs/README.md),
-[`architecture.md`](rag_guardian/docs/architecture.md), and
-[`scalability.md`](rag_guardian/docs/scalability.md).
+See [`redactai.gateway/docs/README.md`](redactai.gateway/docs/README.md),
+[`architecture.md`](redactai.gateway/docs/architecture.md), and
+[`scalability.md`](redactai.gateway/docs/scalability.md).
 
 ## Built-in Detectors
 
@@ -65,38 +65,38 @@ See [`rag_guardian/docs/README.md`](rag_guardian/docs/README.md),
 python -m pip install -e ".[dev]"
 ```
 
-This installs the `pii-scrub` console script.
+This installs the `redactai-engine` console script.
 
 ## Usage
 
 Scrub a single file (the canonical command):
 
 ```bash
-pii-scrub scrub input.log output.log
+redactai-engine scrub input.log output.log
 ```
 
 Use only specific detectors:
 
 ```bash
-pii-scrub scrub input.log output.log -d email -d ipv4 -d jwt
+redactai-engine scrub input.log output.log -d email -d ipv4 -d jwt
 ```
 
 Mask instead of labelling, keeping the last 4 characters:
 
 ```bash
-pii-scrub scrub input.log output.log --mask --keep-last 4
+redactai-engine scrub input.log output.log --mask --keep-last 4
 ```
 
 Scrub many files concurrently into a directory:
 
 ```bash
-pii-scrub batch logs/*.log -o scrubbed/ --workers 8
+redactai-engine batch logs/*.log -o scrubbed/ --workers 8
 ```
 
 List available detectors:
 
 ```bash
-pii-scrub detectors
+redactai-engine detectors
 ```
 
 ## Detection Output Format
@@ -117,11 +117,11 @@ Each detection produces a structured result:
 ## Project layout
 
 ```text
-pii-scrub-stream/
+redactai/
 ├── pyproject.toml
 ├── README.md
 ├── LICENSE
-└── src/pii_scrub_stream/
+└── src/redactai/engine/
     ├── cli/            # Click command-line interface
     │   └── main.py
     ├── scrubber/       # Redaction engine + strategies
@@ -146,7 +146,7 @@ tests/                  # pytest unit tests
 Every detector implements a single method that maps text to a list of matches:
 
 ```python
-from pii_scrub_stream.detectors.base import Detector, Match
+from redactai.engine.detectors.base import Detector, Match
 
 class Detector:
     label: str = "GENERIC"
@@ -165,7 +165,7 @@ add secondary validation:
 
 ```python
 import re
-from pii_scrub_stream.detectors.base import RegexDetector
+from redactai.engine.detectors.base import RegexDetector
 
 class ApiKeyDetector(RegexDetector):
     label = "API_KEY"
@@ -179,7 +179,7 @@ class ApiKeyDetector(RegexDetector):
 Then register it:
 
 ```python
-from pii_scrub_stream.detectors import REGISTRY
+from redactai.engine.detectors import REGISTRY
 REGISTRY["api_key"] = ApiKeyDetector
 ```
 
@@ -188,8 +188,8 @@ REGISTRY["api_key"] = ApiKeyDetector
 `RedactionEngine` accepts any number of detectors plus a redaction strategy:
 
 ```python
-from pii_scrub_stream import RedactionEngine
-from pii_scrub_stream.detectors import default_detectors
+from redactai.engine import RedactionEngine
+from redactai.engine.detectors import default_detectors
 
 engine = RedactionEngine(default_detectors())
 

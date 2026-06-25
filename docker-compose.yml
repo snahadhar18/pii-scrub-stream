@@ -1,4 +1,4 @@
-# Production-flavored compose stack for RAG Guardian.
+# Production-flavored compose stack for RedactAI.
 #
 # - `api`: the FastAPI gateway built from the multi-stage Dockerfile.
 # - `redis`: optional broker for the scalability layer (Milestone 9). Enabled
@@ -13,7 +13,7 @@ services:
     build:
       context: .
       target: runtime
-    image: rag-guardian:latest
+    image: redactai:latest
     ports:
       - "${RG_PORT:-8000}:8000"
     environment:
@@ -21,10 +21,10 @@ services:
       RG_API__PORT: "8000"
       RG_PROCESSING__WORKERS: ${RG_WORKERS:-8}
       RG_OBSERVABILITY__LOG_FORMAT: json
-      RG_OBSERVABILITY__AUDIT_PATH: /var/log/rag-guardian/audit.log
+      RG_OBSERVABILITY__AUDIT_PATH: /var/log/redactai/audit.log
     volumes:
       - ./data:/data:ro                       # inbound files to ingest
-      - audit-logs:/var/log/rag-guardian      # persisted audit trail
+      - audit-logs:/var/log/redactai      # persisted audit trail
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health').status==200 else 1)"]

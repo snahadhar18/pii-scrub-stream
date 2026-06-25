@@ -1,0 +1,8 @@
+refactor: rebrand project to RedactAI
+
+- Merged pii-scrub-stream and rag-guardian into a unified redactai package
+- Restructured directories: src/redactai/engine and src/redactai/gateway
+- Renamed CLI commands to redactai-engine and redactai-gateway
+- Updated README and all cross-references
+
+Co-authored-by: Prakhar SHUKLA <pss317@uowmail.edu.au>
