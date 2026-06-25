@@ -5,9 +5,13 @@ from __future__ import annotations
 from typing import Dict, List, Type
 
 from pii_scrub_stream.detectors.base import Detector, Match, RegexDetector
+from pii_scrub_stream.detectors.aws_key import AWSAccessKeyDetector
 from pii_scrub_stream.detectors.credit_card import CreditCardDetector
 from pii_scrub_stream.detectors.email import EmailDetector
+from pii_scrub_stream.detectors.generic_api_key import GenericAPIKeyDetector
 from pii_scrub_stream.detectors.ip import IPv4Detector, IPv6Detector
+from pii_scrub_stream.detectors.jwt import JWTDetector
+from pii_scrub_stream.detectors.openai_key import OpenAIKeyDetector
 from pii_scrub_stream.detectors.phone import PhoneDetector
 from pii_scrub_stream.detectors.ssn import SSNDetector
 
@@ -19,6 +23,10 @@ REGISTRY: Dict[str, Type[Detector]] = {
     "ipv6": IPv6Detector,
     "credit_card": CreditCardDetector,
     "ssn": SSNDetector,
+    "jwt": JWTDetector,
+    "aws_key": AWSAccessKeyDetector,
+    "openai_key": OpenAIKeyDetector,
+    "generic_api_key": GenericAPIKeyDetector,
 }
 
 
@@ -48,10 +56,14 @@ __all__ = [
     "Detector",
     "Match",
     "RegexDetector",
+    "AWSAccessKeyDetector",
     "CreditCardDetector",
     "EmailDetector",
+    "GenericAPIKeyDetector",
     "IPv4Detector",
     "IPv6Detector",
+    "JWTDetector",
+    "OpenAIKeyDetector",
     "PhoneDetector",
     "SSNDetector",
     "REGISTRY",
