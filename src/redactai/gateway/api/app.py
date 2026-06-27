@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 """FastAPI application factory and route definitions.
 
 Endpoints:

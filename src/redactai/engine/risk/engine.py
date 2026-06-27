@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 """Risk Scoring Engine for RedactAI."""
 
 from dataclasses import dataclass

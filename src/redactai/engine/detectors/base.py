@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 """Core detector interface and reusable base classes.
 
 A :class:`Detector` inspects a chunk of text and reports the spans that

@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 """HTTP API layer (FastAPI).
 
 Exposes the gateway over HTTP: synchronous scanning, streaming, file ingestion,

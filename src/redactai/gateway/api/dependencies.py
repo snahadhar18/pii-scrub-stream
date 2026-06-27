@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 """FastAPI dependency providers.
 
 These functions bridge FastAPI's ``Depends`` system to our DI

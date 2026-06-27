@@ -24,7 +24,6 @@ ENV PATH="/opt/venv/bin:$PATH"
 # Copy only what's needed to build the wheel first for better layer caching.
 COPY pyproject.toml README.md LICENSE ./
 COPY src ./src
-COPY rag_guardian ./rag_guardian
 
 RUN pip install --upgrade pip && pip install ".[api,json]"
 
@@ -34,9 +33,9 @@ FROM python:3.12-slim AS runtime
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PATH="/opt/venv/bin:$PATH" \
-    RG_API__HOST=0.0.0.0 \
-    RG_API__PORT=8000 \
-    RG_OBSERVABILITY__LOG_FORMAT=json
+    REDACTAI_API__HOST=0.0.0.0 \
+    REDACTAI_API__PORT=8000 \
+    REDACTAI_OBSERVABILITY__LOG_FORMAT=json
 
 # Non-root runtime user.
 RUN groupadd --system app && useradd --system --gid app --create-home app
@@ -54,5 +53,5 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
 sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health').status==200 else 1)"
 
 # Run the ASGI app via uvicorn using the application factory.
-CMD ["uvicorn", "rag_guardian.api.app:create_app", "--factory", \
+CMD ["uvicorn", "redactai.gateway.api.app:create_app", "--factory", \
      "--host", "0.0.0.0", "--port", "8000"]

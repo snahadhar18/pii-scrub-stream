@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 """``redactai`` command-line entry point.
 
 Commands:

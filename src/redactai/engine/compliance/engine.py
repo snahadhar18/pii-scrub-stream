@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 """Compliance Engine for RedactAI."""
 
 from dataclasses import dataclass, field

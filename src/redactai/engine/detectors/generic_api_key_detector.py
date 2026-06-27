@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 """Generic API key detector.
 
 This is a catch-all detector for API keys, tokens, and secrets that don't

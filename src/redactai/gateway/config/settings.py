@@ -3,8 +3,8 @@
 All tunables live here as nested Pydantic models so they are validated once, at
 startup, and injected everywhere else. Settings load from (in order of
 precedence): explicit constructor args, environment variables, then a ``.env``
-file. Environment variables use the ``RG_`` prefix and ``__`` as the nested
-delimiter, e.g. ``RG_PROCESSING__WORKERS=8`` or ``RG_API__PORT=9000``.
+file. Environment variables use the ``REDACTAI_`` prefix and ``__`` as the nested
+delimiter, e.g. ``REDACTAI_PROCESSING__WORKERS=8`` or ``REDACTAI_API__PORT=9000``.
 """
 
 from __future__ import annotations
@@ -76,7 +76,7 @@ class Settings(BaseSettings):
     """Root application settings, composed of the sections above."""
 
     model_config = SettingsConfigDict(
-        env_prefix="RG_",
+        env_prefix="REDACTAI_",
         env_nested_delimiter="__",
         env_file=".env",
         env_file_encoding="utf-8",

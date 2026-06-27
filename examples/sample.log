@@ -1,0 +1,7 @@
+[2026-06-27 15:45:00] INFO: User login successful. Email: john.doe@example.com
+[2026-06-27 15:45:05] DEBUG: Processing payment. Card number: 4532123456789012, Expiry: 12/28
+[2026-06-27 15:45:10] WARN: AWS API call failed. Key used: AKIAIOSFODNN7EXAMPLE
+[2026-06-27 15:45:15] ERROR: Database connection failed. Connection string contains password: MySecretPassword123!
+[2026-06-27 15:45:20] INFO: User profile updated. Phone: +1-555-019-8372, SSN: 000-12-3456
+[2026-06-27 15:45:25] DEBUG: Generated session token: token_live_1234567890abcdefghijklmnopqr
+[2026-06-27 15:45:30] INFO: Normal log message with no sensitive data.

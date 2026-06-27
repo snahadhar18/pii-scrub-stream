@@ -11,8 +11,8 @@ from redactai.gateway.core.registry import DetectorRegistry
 
 
 def test_settings_env_override(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("RG_PROCESSING__WORKERS", "16")
-    monkeypatch.setenv("RG_API__PORT", "9100")
+    monkeypatch.setenv("REDACTAI_PROCESSING__WORKERS", "16")
+    monkeypatch.setenv("REDACTAI_API__PORT", "9100")
     settings = Settings()
     assert settings.processing.workers == 16
     assert settings.api.port == 9100

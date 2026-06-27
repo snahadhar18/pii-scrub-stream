@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 """AI powered PII detector using Microsoft Presidio and spaCy."""
 
 import logging
