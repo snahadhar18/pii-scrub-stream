@@ -17,9 +17,7 @@ from redactai.engine.detectors.base import Detector, Match
 
 # AWS Access Key ID: starts with AKIA/ASIA/AIDA/AROA/ANPA/ANVA followed
 # by 16 uppercase alphanumeric characters.
-_AWS_ACCESS_KEY_RE = re.compile(
-    r"\b((?:AKIA|ASIA|AIDA|AROA|ANPA|ANVA)[A-Z0-9]{16})\b"
-)
+_AWS_ACCESS_KEY_RE = re.compile(r"\b((?:AKIA|ASIA|AIDA|AROA|ANPA|ANVA)[A-Z0-9]{16})\b")
 
 # AWS Secret Access Key: 40 characters of Base64-like characters.
 # Usually appears near an access key or in a config block.
@@ -52,10 +50,7 @@ class AWSAccessKeyDetector(Detector):
             prefix = value[:4]
 
             # AKIA = long-term, ASIA = STS temp creds — both high confidence
-            if prefix in ("AKIA", "ASIA"):
-                confidence = 0.99
-            else:
-                confidence = 0.95
+            confidence = 0.99 if prefix in ("AKIA", "ASIA") else 0.95
 
             matches.append(
                 Match(

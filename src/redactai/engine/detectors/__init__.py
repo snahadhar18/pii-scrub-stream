@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Type
+import contextlib
 
 from redactai.engine.detectors.ai_detector import AIDetector
 from redactai.engine.detectors.auth_tokens_detector import AuthTokensDetector
@@ -73,10 +73,8 @@ def default_detectors() -> list[Detector]:
     """Instantiate one of every registered detector, skipping those with missing dependencies."""
     detectors = []
     for cls in REGISTRY.values():
-        try:
+        with contextlib.suppress(ImportError):
             detectors.append(cls())
-        except ImportError:
-            pass
     return detectors
 
 

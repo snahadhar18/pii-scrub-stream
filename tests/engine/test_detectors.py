@@ -719,10 +719,24 @@ class TestRegistry:
 
     def test_all_detectors_registered(self):
         expected = {
-            "email", "phone", "ipv4", "ipv6", "credit_card", "ssn",
-            "jwt", "aws_key", "openai_key", "generic_api_key",
-            "github_token", "password", "secret", "cloud_keys",
-            "auth_tokens", "crypto_keys", "network_secrets", "ai_entity",
+            "email",
+            "phone",
+            "ipv4",
+            "ipv6",
+            "credit_card",
+            "ssn",
+            "jwt",
+            "aws_key",
+            "openai_key",
+            "generic_api_key",
+            "github_token",
+            "password",
+            "secret",
+            "cloud_keys",
+            "auth_tokens",
+            "crypto_keys",
+            "network_secrets",
+            "ai_entity",
         }
         assert expected == set(REGISTRY.keys())
 
@@ -783,8 +797,12 @@ class TestMatchDataclass:
         from redactai.engine.detectors.base import Match
 
         m = Match(
-            start=0, end=5, value="hello", label="TEST",
-            confidence=0.88, replacement="[TEST_REDACTED]",
+            start=0,
+            end=5,
+            value="hello",
+            label="TEST",
+            confidence=0.88,
+            replacement="[TEST_REDACTED]",
         )
         d = m.to_dict()
         assert d == {

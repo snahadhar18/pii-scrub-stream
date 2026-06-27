@@ -12,6 +12,7 @@ _PASSWORD_CTX_RE = re.compile(
     re.IGNORECASE,
 )
 
+
 class PasswordDetector(Detector):
     """Detect passwords based on contextual clues and minimum length."""
 
@@ -26,10 +27,12 @@ class PasswordDetector(Detector):
         for m in _PASSWORD_CTX_RE.finditer(text):
             value = m.group(1)
             entropy = _shannon_entropy(value)
-            
+
             # Require minimum entropy to avoid flagging password=test or empty values
             if entropy >= self.min_entropy:
-                confidence = min(0.95, self.default_confidence + (entropy - self.min_entropy) * 0.05)
+                confidence = min(
+                    0.95, self.default_confidence + (entropy - self.min_entropy) * 0.05
+                )
                 matches.append(
                     Match(
                         start=m.start(1),

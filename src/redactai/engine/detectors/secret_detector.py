@@ -12,6 +12,7 @@ _SECRET_CTX_RE = re.compile(
     re.IGNORECASE,
 )
 
+
 class SecretDetector(Detector):
     """Detect generic secrets based on contextual clues and minimum length/entropy."""
 
@@ -26,9 +27,11 @@ class SecretDetector(Detector):
         for m in _SECRET_CTX_RE.finditer(text):
             value = m.group(1)
             entropy = _shannon_entropy(value)
-            
+
             if entropy >= self.min_entropy:
-                confidence = min(0.95, self.default_confidence + (entropy - self.min_entropy) * 0.05)
+                confidence = min(
+                    0.95, self.default_confidence + (entropy - self.min_entropy) * 0.05
+                )
                 matches.append(
                     Match(
                         start=m.start(1),

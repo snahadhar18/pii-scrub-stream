@@ -101,7 +101,9 @@ def scrub_command(
     result = engine.scrub_file(input_path, output_path, encoding=encoding)
     if not result.ok:
         raise click.ClickException(f"Failed to scrub {input_path}: {result.error}")
-    click.echo(f"Scrubbed {result.input_path} -> {result.output_path} ({result.matches} redactions)")
+    click.echo(
+        f"Scrubbed {result.input_path} -> {result.output_path} ({result.matches} redactions)"
+    )
 
 
 @cli.command(name="batch")

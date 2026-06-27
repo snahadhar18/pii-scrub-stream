@@ -44,14 +44,14 @@ _HEX_TOKEN_RE = re.compile(
 
 # Common API key prefixes used by various services
 _PREFIXED_KEY_RE = re.compile(
-    r"\b((?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{36,})\b"   # GitHub tokens
-    r"|\b(glpat-[A-Za-z0-9_\-]{20,})\b"                    # GitLab tokens
-    r"|\b(xox[bpsar]-[A-Za-z0-9\-]{10,})\b"                # Slack tokens
+    r"\b((?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{36,})\b"  # GitHub tokens
+    r"|\b(glpat-[A-Za-z0-9_\-]{20,})\b"  # GitLab tokens
+    r"|\b(xox[bpsar]-[A-Za-z0-9\-]{10,})\b"  # Slack tokens
     r"|\b(SG\.[A-Za-z0-9_\-]{22,}\.[A-Za-z0-9_\-]{22,})\b"  # SendGrid keys
-    r"|\b(sq0[a-z]{3}-[A-Za-z0-9_\-]{22,})\b"              # Square keys
-    r"|\b(rk_live_[A-Za-z0-9]{20,})\b"                     # Stripe restricted
-    r"|\b(pk_live_[A-Za-z0-9]{20,})\b"                     # Stripe publishable
-    r"|\b(sk_live_[A-Za-z0-9]{20,})\b",                    # Stripe secret
+    r"|\b(sq0[a-z]{3}-[A-Za-z0-9_\-]{22,})\b"  # Square keys
+    r"|\b(rk_live_[A-Za-z0-9]{20,})\b"  # Stripe restricted
+    r"|\b(pk_live_[A-Za-z0-9]{20,})\b"  # Stripe publishable
+    r"|\b(sk_live_[A-Za-z0-9]{20,})\b",  # Stripe secret
 )
 
 
@@ -65,9 +65,7 @@ def _shannon_entropy(data: str) -> float:
         return 0.0
     counts = Counter(data)
     length = len(data)
-    return -sum(
-        (count / length) * math.log2(count / length) for count in counts.values()
-    )
+    return -sum((count / length) * math.log2(count / length) for count in counts.values())
 
 
 class GenericAPIKeyDetector(Detector):

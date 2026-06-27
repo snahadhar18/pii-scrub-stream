@@ -11,6 +11,7 @@ import json
 import re
 from collections.abc import Sequence
 from pathlib import Path
+from unittest import mock
 
 import pytest
 from click.testing import CliRunner
@@ -80,13 +81,15 @@ def test_ingest_summary(runner: CliRunner, tmp_path: Path) -> None:
     assert summary["label_counts"]["EMAIL"] == 2
 
 
-from unittest import mock
-
-
 @pytest.mark.skip(reason="Click CliRunner sys.stdin mock aborts intermittently on stream command")
 @mock.patch("redactai.gateway.streaming.stream.signal.signal")
 def test_stream_command(mock_signal, runner: CliRunner) -> None:
-    result = runner.invoke(cli, ["stream", "-d", "fake_email"], input="contact a@b.com\nplain\n", catch_exceptions=False)
+    result = runner.invoke(
+        cli,
+        ["stream", "-d", "fake_email"],
+        input="contact a@b.com\nplain\n",
+        catch_exceptions=False,
+    )
     assert result.exit_code == 0, result.output
     lines = result.output.splitlines()
     assert "contact [EMAIL]" in lines

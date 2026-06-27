@@ -20,10 +20,10 @@ This document serves as the hub for all things related to contributing to the pr
 By participating in this project, you are expected to uphold our [Code of Conduct](CODE_OF_CONDUCT.md). Please report unacceptable behavior to the repository maintainers.
 
 ## Getting Started
-- If you find a bug, please check the [Issue Tracker](https://github.com/snahadhar18/pii-scrub-stream/issues) first to see if it's already reported.
+- If you find a bug, please check the [Issue Tracker](https://github.com/snahadhar18/Redact-AI/issues) first to see if it's already reported.
 - If it's a new bug, submit an issue using the Bug Report template.
 - For feature requests, submit an issue using the Feature Request template.
-- Join the conversation in our [GitHub Discussions](https://github.com/snahadhar18/pii-scrub-stream/discussions).
+- Join the conversation in our [GitHub Discussions](https://github.com/snahadhar18/Redact-AI/discussions).
 
 ## Development Environment
 
@@ -35,8 +35,8 @@ By participating in this project, you are expected to uphold our [Code of Conduc
 ### Setup
 1. Fork the repository and clone your fork:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/pii-scrub-stream.git
-   cd pii-scrub-stream
+   git clone https://github.com/YOUR_USERNAME/Redact-AI.git
+   cd Redact-AI
    ```
 2. Create a virtual environment and activate it:
    ```bash

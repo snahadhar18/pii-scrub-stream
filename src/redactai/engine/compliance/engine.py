@@ -8,6 +8,7 @@ from redactai.engine.detectors.base import Match
 @dataclass
 class Finding:
     """A compliance finding derived from a Match."""
+
     match: Match
     regulations: set[str]
     compliance_severity: str
@@ -17,6 +18,7 @@ class Finding:
 @dataclass
 class ComplianceReport:
     """Summary of compliance findings for a given payload."""
+
     total_findings: int
     regulations_triggered: set[str]
     critical_findings: int
@@ -101,12 +103,14 @@ class ComplianceAnalyzer:
             elif "HIPAA" in regs:
                 remediation = "De-identify according to HIPAA Safe Harbor."
 
-            findings.append(Finding(
-                match=m,
-                regulations=regs,
-                compliance_severity=comp_severity,
-                remediation=remediation
-            ))
+            findings.append(
+                Finding(
+                    match=m,
+                    regulations=regs,
+                    compliance_severity=comp_severity,
+                    remediation=remediation,
+                )
+            )
 
         return ComplianceReport(
             total_findings=len(findings),

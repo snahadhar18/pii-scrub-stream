@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 try:
     from presidio_analyzer import AnalyzerEngine
+
     HAS_PRESIDIO = True
 except ImportError:
     HAS_PRESIDIO = False
@@ -15,8 +16,8 @@ except ImportError:
 
 class AIDetector(Detector):
     """Detect PII entities using NLP via Microsoft Presidio and spaCy.
-    
-    Detects: PERSON, LOCATION, ORGANIZATION, NRP (National IDs), 
+
+    Detects: PERSON, LOCATION, ORGANIZATION, NRP (National IDs),
     IBAN_CODE, DATE_TIME, and more.
     """
 
@@ -29,7 +30,7 @@ class AIDetector(Detector):
                 "Presidio is not installed. Install the AI dependencies with: "
                 "pip install 'redactai[ai]'"
             )
-        
+
         self.languages = languages or ["en"]
         try:
             self.analyzer = AnalyzerEngine()
@@ -55,17 +56,19 @@ class AIDetector(Detector):
         for lang in self.languages:
             # Analyze text for entities
             results = self.analyzer.analyze(text=text, language=lang)
-            
+
             for result in results:
-                value = text[result.start:result.end]
-                matches.append(Match(
-                    start=result.start,
-                    end=result.end,
-                    value=value,
-                    label=result.entity_type,
-                    confidence=round(result.score, 2),
-                    severity=self.get_severity(result.entity_type),
-                    replacement=f"[{result.entity_type}_REDACTED]"
-                ))
+                value = text[result.start : result.end]
+                matches.append(
+                    Match(
+                        start=result.start,
+                        end=result.end,
+                        value=value,
+                        label=result.entity_type,
+                        confidence=round(result.score, 2),
+                        severity=self.get_severity(result.entity_type),
+                        replacement=f"[{result.entity_type}_REDACTED]",
+                    )
+                )
 
         return matches

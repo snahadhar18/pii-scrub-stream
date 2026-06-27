@@ -8,8 +8,9 @@ from redactai.engine.detectors.base import Match
 @dataclass
 class RiskAssessment:
     """The overall risk assessment for a payload."""
-    score: float        # 0.0 to 100.0
-    risk_level: str     # SAFE, LOW, MEDIUM, HIGH, CRITICAL
+
+    score: float  # 0.0 to 100.0
+    risk_level: str  # SAFE, LOW, MEDIUM, HIGH, CRITICAL
     factors: list[str]  # Explanations for the score
 
     def to_dict(self) -> dict:
@@ -33,7 +34,9 @@ class RiskScorer:
 
     def evaluate(self, matches: list[Match]) -> RiskAssessment:
         if not matches:
-            return RiskAssessment(score=0.0, risk_level="SAFE", factors=["No sensitive data detected."])
+            return RiskAssessment(
+                score=0.0, risk_level="SAFE", factors=["No sensitive data detected."]
+            )
 
         score = 0.0
         factors = []
@@ -44,7 +47,7 @@ class RiskScorer:
         for m in matches:
             weight = self.SEVERITY_WEIGHTS.get(m.severity, 5.0)
             score += weight * m.confidence
-            
+
             if m.severity == "CRITICAL":
                 critical_count += 1
             elif m.severity == "HIGH":
@@ -57,7 +60,7 @@ class RiskScorer:
             factors.append(f"Contains {critical_count} CRITICAL findings (e.g. Credentials/Keys).")
         if high_count > 0:
             factors.append(f"Contains {high_count} HIGH severity findings.")
-            
+
         if score >= 85.0:
             level = "CRITICAL"
         elif score >= 60.0:

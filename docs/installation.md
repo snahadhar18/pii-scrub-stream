@@ -23,8 +23,8 @@ source redactai-env/bin/activate  # On Windows: redactai-env\Scripts\activate
 Clone the repository and install it in editable mode (`-e`) so any changes to the source code are immediately reflected.
 
 ```bash
-git clone https://github.com/snahadhar18/pii-scrub-stream.git
-cd pii-scrub-stream
+git clone https://github.com/snahadhar18/Redact-AI.git
+cd Redact-AI
 
 # Install the base engine
 pip install -e .

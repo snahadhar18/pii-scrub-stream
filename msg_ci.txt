@@ -1,3 +1,0 @@
-ci: fix workflow paths for RedactAI rebrand
-
-Co-authored-by: Prakhar SHUKLA <pss317@uowmail.edu.au>

@@ -20,14 +20,10 @@ from redactai.engine.detectors.base import Detector, Match
 #  - Project:   sk-proj-<variable length alphanum+hyphens+underscores>
 #  - SvcAcct:   sk-svcacct-<variable length>
 #  - Org keys:  org-<24+ chars>
-_OPENAI_KEY_RE = re.compile(
-    r"\b(sk-(?:proj-|svcacct-)?[A-Za-z0-9_-]{20,})\b"
-)
+_OPENAI_KEY_RE = re.compile(r"\b(sk-(?:proj-|svcacct-)?[A-Za-z0-9_-]{20,})\b")
 
 # Organization ID pattern (less sensitive but still a credential leak)
-_OPENAI_ORG_RE = re.compile(
-    r"\b(org-[A-Za-z0-9]{20,})\b"
-)
+_OPENAI_ORG_RE = re.compile(r"\b(org-[A-Za-z0-9]{20,})\b")
 
 
 class OpenAIKeyDetector(Detector):

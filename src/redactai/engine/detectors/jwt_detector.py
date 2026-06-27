@@ -18,9 +18,9 @@ from redactai.engine.detectors.base import Detector, Match
 # Each segment contains alphanumeric chars plus - and _ (Base64url alphabet).
 # Minimum realistic lengths: header ~20, payload ~20, signature ~20 chars.
 _JWT_RE = re.compile(
-    r"\b(eyJ[A-Za-z0-9_-]{10,})\."     # header — always starts with eyJ (base64 of '{"')
-    r"(eyJ[A-Za-z0-9_-]{10,})\."        # payload — typically starts with eyJ too
-    r"([A-Za-z0-9_-]{20,})\b",           # signature
+    r"\b(eyJ[A-Za-z0-9_-]{10,})\."  # header — always starts with eyJ (base64 of '{"')
+    r"(eyJ[A-Za-z0-9_-]{10,})\."  # payload — typically starts with eyJ too
+    r"([A-Za-z0-9_-]{20,})\b",  # signature
 )
 
 
@@ -62,10 +62,7 @@ class JWTDetector(Detector):
             header_segment = m.group(1)
 
             # Validate header for higher confidence
-            if _is_valid_jwt_header(header_segment):
-                confidence = 0.99
-            else:
-                confidence = self.default_confidence
+            confidence = 0.99 if _is_valid_jwt_header(header_segment) else self.default_confidence
 
             matches.append(
                 Match(

@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # ---------------------------------------------------------------------------
-# RAG Guardian -- production multi-stage image.
+# RedactAI -- production multi-stage image.
 #
 # Stage 1 (builder): install the package and its API extras into an isolated
 # virtualenv so the final image carries only runtime artifacts (no build tools,
