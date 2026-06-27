@@ -145,6 +145,10 @@ Redact a single log file locally using the engine:
 redactai-engine scrub system.log secure.log --mask --keep-last 4
 ```
 
+<div align="center">
+  <img src="docs/assets/screenshot_cli.png" alt="CLI Screenshot" width="800"/>
+</div>
+
 Process a directory of logs concurrently using 16 workers:
 ```bash
 redactai-engine batch /var/logs/*.log -o /secure_logs/ -w 16
@@ -161,6 +165,10 @@ Spin up the RedactAI microservice:
 ```bash
 redactai-gateway serve --port 8000
 ```
+
+<div align="center">
+  <img src="docs/assets/screenshot_api.png" alt="OpenAPI Screenshot" width="800"/>
+</div>
 
 Scan text via REST:
 ```bash
@@ -203,12 +211,6 @@ For a complete list of settings, see the [Configuration Guide](docs/usage.md).
 - **Python:** 3.10, 3.11, 3.12
 - **Containers:** Docker, Kubernetes
 
-## Screenshots
-<div align="center">
-  <img src="docs/assets/screenshot_cli.png" alt="CLI Screenshot" width="800"/>
-  <br/><br/>
-  <img src="docs/assets/screenshot_api.png" alt="OpenAPI Screenshot" width="800"/>
-</div>
 
 ## Roadmap
 See [ROADMAP.md](ROADMAP.md) for our future plans, including GPU-accelerated NLP models, native Rust extensions, and Kafka/RabbitMQ integrations.

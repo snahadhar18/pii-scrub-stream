@@ -5,6 +5,10 @@ The RedactAI Gateway exposes a high-performance REST API powered by FastAPI.
 ## OpenAPI Specification
 When the server is running, the interactive Swagger UI is available at `http://localhost:8000/docs`.
 
+<div align="center">
+  <img src="assets/screenshot_api.png" alt="OpenAPI Screenshot" width="800"/>
+</div>
+
 ---
 
 ## Endpoints
